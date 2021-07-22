@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import "./App.css";
 
 function App() {
+  const [name, setName] = React.useState(null);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{name}</h1>
+      <button
+        onClick={async () => {
+          await new Promise((resolve) => setTimeout(() => resolve(), 500));
+          const response = await fetch(
+            "https://api.github.com/users/mjetek"
+          ).then((r) => r.json());
+          setName(response.name);
+        }}
+      >
+        Fetch
+      </button>
     </div>
   );
 }
